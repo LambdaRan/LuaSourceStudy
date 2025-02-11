@@ -1,0 +1,4 @@
+
+luaX_xxx 标识内部模块的api
+lua_xxx 供外部程序使用的api
+
