@@ -22,13 +22,15 @@
 ** cast to 'void' avoids warnings of "value unused".
 */
 /*
-这个宏避免了运行时除法 MAX_SIZET/(e)，因为 'e' 总是常量。 这个宏有些复杂是为了避免警告： +1 避免了"比较结果是常量"的警告； 将结果转换为 'void' 类型避免了"值未被使用"的警告。
- */
+这个宏避免了运行时除法 MAX_SIZET/(e)，因为 'e' 总是常量。
+这个宏有些复杂是为了避免警告：
++1 避免了"比较结果是常量"的警告； 
+将结果转换为 'void' 类型避免了"值未被使用"的警告。
+*/
 #define luaM_reallocv(L,b,on,n,e) \
   (cast(void, \
      (cast(size_t, (n)+1) > MAX_SIZET/(e)) ? (luaM_toobig(L), 0) : 0), \
    luaM_realloc_(L, (b), (on)*(e), (n)*(e)))
-
 #define luaM_freemem(L, b, s)	luaM_realloc_(L, (b), (s), 0)
 #define luaM_free(L, b)		luaM_realloc_(L, (b), sizeof(*(b)), 0)
 #define luaM_freearray(L, b, n)   luaM_reallocv(L, (b), n, 0, sizeof((b)[0]))
