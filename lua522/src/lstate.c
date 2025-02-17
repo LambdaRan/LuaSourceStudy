@@ -161,6 +161,7 @@ static void freestack (lua_State *L) {
 
 /*
 ** Create registry table and its predefined values
+** 创建注册表及其预定义值
 */
 static void init_registry (lua_State *L, global_State *g) {
   TValue mt;

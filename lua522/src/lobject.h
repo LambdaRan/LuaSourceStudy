@@ -18,6 +18,7 @@
 
 /*
 ** Extra tags for non-values
+** 非值的额外标签
 */
 #define LUA_TPROTO	LUA_NUMTAGS
 #define LUA_TUPVAL	(LUA_NUMTAGS+1)
@@ -53,6 +54,7 @@
 
 
 /* Variant tags for strings */
+/* 用于字符串的变体标签 子类型区分放在类型字节的高四位*/
 #define LUA_TSHRSTR	(LUA_TSTRING | (0 << 4))  /* short strings */
 #define LUA_TLNGSTR	(LUA_TSTRING | (1 << 4))  /* long strings */
 
@@ -100,7 +102,7 @@ typedef union Value Value;
 ** Tagged Values. This is the basic representation of values in Lua,
 ** an actual value plus a tag with its type.
 */
-
+// 标记值。这是Lua中值的基本表示，一个实际值加上其类型的标记。
 #define TValuefields	Value value_; int tt_
 
 typedef struct lua_TValue TValue;
@@ -386,14 +388,17 @@ typedef struct lua_TValue TValue;
 
 
 union Value {
-  GCObject *gc;    /* collectable objects */
+  // 引用类型
+  GCObject *gc;    /* collectable objects */ 
   void *p;         /* light userdata */
   int b;           /* booleans */
   lua_CFunction f; /* light C functions */
   numfield         /* numbers */
 };
 
-
+// #define TValuefields	Value value_; int tt_
+// tt_类型字段，表示当前值的类型
+// 默认数据大小为 8 + 4 = 12字节
 struct lua_TValue {
   TValuefields;
 };
@@ -408,15 +413,17 @@ typedef TValue *StkId;  /* index to stack elements */
 ** Header for string value; string bytes follow the end of this structure
 */
 typedef union TString {
+  // 确保字符串的最大对齐  
   L_Umaxalign dummy;  /* ensures maximum alignment for strings */
   struct {
     CommonHeader;
+    // 辅助信息，用来这个字符串是否为保留字，这个标记用于词法分析器对保留字的快速判断；对于长字符串，可以用于惰性求哈希值
     lu_byte extra;  /* reserved words for short strings; "has hash" for longs */
     unsigned int hash;
     size_t len;  /* number of characters in string */
   } tsv;
 } TString;
-
+// 所有的短字符串均存放在global_state的strt域中。
 
 /* get the actual string (array of bytes) from a TString */
 #define getstr(ts)	cast(const char *, (ts) + 1)
@@ -569,6 +576,12 @@ typedef struct Table {
   int sizearray;  /* size of `array' array */
 } Table;
 
+/*
+Table的数组部分存在TValue *array中，其长度信息存于int sizearray  
+哈希表存在Node *node中，哈希表的大小用lu_byte lsizenode表示。由于哈希表的大小一定为2的整数次幂，所以这里的lsizenode表示的是幂次，不是实际大小。
+
+*/ 
+
 
 
 /*
@@ -577,7 +590,7 @@ typedef struct Table {
 #define lmod(s,size) \
 	(check_exp((size&(size-1))==0, (cast(int, (s) & ((size)-1)))))
 
-
+// 因为存的是幂次，所以这里移位计算大小
 #define twoto(x)	(1<<(x))
 #define sizenode(t)	(twoto((t)->lsizenode))
 

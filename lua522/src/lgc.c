@@ -1099,6 +1099,7 @@ static lu_mem singlestep (lua_State *L) {
 /*
 ** advances the garbage collector until it reaches a state allowed
 ** by 'statemask'
+** 将垃圾收集器推进，直到达到 'statemask' 允许的状态。
 */
 void luaC_runtilstate (lua_State *L, int statesmask) {
   global_State *g = G(L);

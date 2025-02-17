@@ -24,6 +24,7 @@ typedef LUAI_MEM l_mem;
 
 
 /* chars used as small naturals (so that `char' is reserved for characters) */
+// unsigned char用作小自然数（因此char保留用于字符）
 typedef unsigned char lu_byte;
 
 
@@ -130,6 +131,7 @@ typedef LUAI_UACNUMBER l_uacNumber;
 ** type for virtual-machine instructions
 ** must be an unsigned with (at least) 4 bytes (see details in lopcodes.h)
 */
+// 虚拟机指令的类型必须是无符号的，至少为4字节（详见lopocdes.h中的细节）.
 typedef lu_int32 Instruction;
 
 

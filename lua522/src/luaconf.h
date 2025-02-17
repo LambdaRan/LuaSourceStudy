@@ -229,6 +229,11 @@
 ** or tags for metamethods, as these strings must be internalized;
 ** #("function") = 8, #("__newindex") = 10.)
 */
+/*
+LUAI_MAXSHORTLEN是短字符串的最大长度，即内部化的字符串。
+（这个值不能小于保留字或用于元方法的标记的长度，因为这些字符串必须内部化；#("function") = 8，#("__newindex") = 10。）  
+LUAI_MAXSHORTLEN不可以设置少于10字节
+*/
 #define LUAI_MAXSHORTLEN        40
 
 

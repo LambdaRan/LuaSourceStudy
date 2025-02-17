@@ -131,5 +131,8 @@ size_t newsize£ºĞÂÄÚ´æ¿éµÄ´óĞ¡£¨ÒÔ×Ö½ÚÎªµ¥Î»£©¡£Èç¹û newsize Îª 0£¬Ôò±íÊ¾ÊÍ·ÅÄÚ´
 Èç¹û newsize Îª 0£¬ÔòÊÍ·Å ptr Ö¸ÏòµÄÄÚ´æ¿é¡£
 Èç£º#define luaM_freemem(L, b, s)	luaM_realloc_(L, (b), (s), 0)
 
-
+²Î¿¼£º
+Ä¬ÈÏg->freallocÊÇº¯Êı static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {}
+nsizeÎª0µÄÊ±ºòÊÍ·ÅÄÚ´æ
+ÆäËûÇé¿ö À©Õ¹ÄÚ´æ¡¢ÉêÇëÄÚ´æ£¬²Ã¼ô
 */
